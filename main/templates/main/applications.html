@@ -1,0 +1,30 @@
+{% extends "main/base.html" %}
+{% block content %}
+<h1>About us</h1>
+
+<table class="table">
+    <thead>
+    <th>Applicant</th>
+    <th>Email Address</th>
+    <th>Academic Level</th>
+    <th>Date Applied</th>
+    <th></th>
+    </thead>
+    </thead>
+    {% for application in applications %}
+
+    <tr>
+        <td>{{ application.applicant.first_name |capfirst }}
+            {{ application.applicant.first_name |capfirst}}</td>
+        <td>{{ application.applicant.email}}</td>
+        <td>{{ application.accademic_level }}</td>
+        <td>{{ application.submission_date| date:"F dd, Y" }}</td>
+        <td> <a href="{% url 'application-update' application.id %}">View application</a></td>
+    </tr>
+
+    {% endfor %}
+
+</table>
+
+
+{% endblock %}

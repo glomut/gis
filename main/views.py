@@ -4,7 +4,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.core.exceptions import ValidationError
 from.models import Application
 from django.views import generic
-from django.views.generic import DetailView,UpdateView
+from django.views.generic import DetailView,UpdateView,ListView
 from bootstrap_datepicker_plus import DateTimePickerInput
 
 def home(request):
@@ -55,9 +55,17 @@ class ApplicationUpdateView(LoginRequiredMixin,UpdateView):
         form.instance.approved_by=self.request.user
         form.instance.approval_date = datetime.now()
         return super().form_valid(form)
+
     def test_func(self):
         application=self.get_object()
         for group in self.request.user.groups.all():
-            if str(group) == "sponsor":
+            print(group)
+            if str(group) == "staff" or str(group) == "sponsor":
                 return True
         return False
+
+class ApplicationListView(ListView):
+    model=Application
+    template_name = 'main/applications.html'
+    context_object_name = 'applications'
+    ordering=['-submission_date',]
