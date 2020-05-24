@@ -6,8 +6,6 @@ class UserRegisterForm(UserCreationForm):
     email=forms.EmailField()
     first_name = forms.CharField(max_length=30)
     last_name = forms.CharField(max_length=30)
-    # group = forms.ModelChoiceField(queryset=Group.objects.all(),
-    #                                required=True, label='Account Type',)
 
     class Meta:
         model=User

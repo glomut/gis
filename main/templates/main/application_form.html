@@ -2,6 +2,11 @@
 {% load crispy_forms_tags %}
 {% block content %}
 
+{% load bootstrap4 %}
+{% bootstrap_css %}
+{% bootstrap_javascript jquery='full' %}
+{{ form.media }}
+
 <div class="content-section">
     <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
@@ -52,7 +57,7 @@
                 </div>
             </div>
               <div class="form-row">
-                <div class="form-group col-md-12 mb-0">
+                <div class="form-group col-md-9 mb-0">
                     {{ form.moltivation|as_crispy_field }}
                 </div>
             </div>

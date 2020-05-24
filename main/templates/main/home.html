@@ -1,20 +1,8 @@
 {% extends "main/base.html" %}
 {% block content %}
-
+<h3><a href="#">Home Page </a></h3>
 {% if user.is_authenticated %}
-    {% for group in user.groups.all %}
-            {%if group|stringformat:"s" == "sponsor" %}
-            <h3><a>View Recent applications</a></h3>
-
-            {%elif group|stringformat:"s" == "applicant" %}
-            <h3><a href="#">Apply for Sponsorship </a></h3>
-            here goes applicant
-{% for app in user.applications.all %}
-{{app}}
-{% endfor %}
-            {%endif%}
-
-    {% endfor %}
+    unkowned group
 
 {% else %}
 
