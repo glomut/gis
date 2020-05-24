@@ -3,6 +3,8 @@
 {% block content %}
 
 <div class="content-section">
+    <div class="form-row">
+                <div class="form-group col-md-6">
     <form method="POST">
         {% csrf_token %}
         <fieldset class="form-group">
@@ -13,8 +15,11 @@
         </fieldset>
         <div class="form-group"><button class="btn btn-outline-info" type="submit">Login</button></div>
     </form>
+                </div></div>
     <div class="border-top pt-3">
-        <small class="text-muted">Do you need an account? <a href="{% url 'register' %}" class="ml-2">Signup here</a> </small>
+        <small class="text-muted">Do you need an account? <a href="{% url 'register-applicant' %}" class="ml-2">Signup Here</a> </small>
+        <br>
+        <small class="text-muted"><a href="{% url 'register-applicant' %}" class="ml-2">Sponsor Registration</a> </small>
     </div>
 
 </div>

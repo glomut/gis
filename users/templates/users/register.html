@@ -8,6 +8,7 @@
         <fieldset class="form-group">
             <legend class="border-bottom mb-4">Register here</legend>
 
+
             <div class="form-row">
                 <div class="form-group col-md-6 mb-0">
                     {{ form.first_name|as_crispy_field }}
@@ -24,9 +25,11 @@
                 <div class="form-group col-md-6 mb-0">
                     {{ form.username|as_crispy_field }}
                 </div>
+
             </div>
 
             <div class="form-row">
+
                 <div class="form-group col-md-6 mb-0">
                     {{ form.password1|as_crispy_field }}
                 </div>
@@ -34,6 +37,7 @@
                     {{ form.password2|as_crispy_field }}
                 </div>
             </div>
+
 
         </fieldset>
         <div class="form-group">

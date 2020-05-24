@@ -9,7 +9,6 @@
     <link href="https://fonts.googleapis.com/css?family=Karla:400,700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.materialdesignicons.com/4.8.95/css/materialdesignicons.min.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-    <link rel="stylesheet" href="{% static 'main/css/bd-wizard.css' %}">
 </head>
 <body>
 <nav class="navbar navbar-expand-sm navbar-light">
@@ -25,26 +24,17 @@
         </button>
 
         <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav mx-auto">
+            <ul class="navbar-nav pull-right">
 
-                <li class="nav-item">
-                    <a href="#project" class="nav-link"><span data-hover="Projects">Projects</span></a>
-                </li>
-                <li class="nav-item">
-                    <a href="#resume" class="nav-link"><span data-hover="Resume">Resume</span></a>
-                </li>
-                <li class="nav-item">
-                    <a href="#contact" class="nav-link"><span data-hover="Contact">Contact</span></a>
-                </li>
 
-                {% if user.is_authenticated %}
+            {% if user.is_authenticated %}
                 <li><a href="{% url 'logout' %}" class="nav-link"><span data-hover="Logout">Logout {{ user }}</span></a>
-                </li>
-                {% else %}
-                <li class="nav-item">
-                    <a href="{% url 'login' %}" class="nav-link"><span data-hover="Login or Register">Login</span></a>
-                </li>
-            </ul>
+            </li>
+            {% else %}
+            <li class="nav-item">
+                <a href="{% url 'login' %}" class="nav-link"><span data-hover="Login or Register">Login</span></a>
+            </li>
+                </ul>
             {% endif %}
 
         </div>

@@ -1,7 +1,5 @@
 from django.contrib import admin
 
-from .models import Education, Application
-
-admin.site.register(Education)
+from .models import Application
 
 admin.site.register(Application)

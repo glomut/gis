@@ -1,9 +1,8 @@
 from django.urls import path
 from . import views
-from .views import EducationView, ApplicationCreateView
+from .views import ApplicationView
 
 urlpatterns = [
     path('', views.home, name='main-home'),
-    path('education/', EducationView.as_view(), name='education-create'),
-    path('application/', ApplicationCreateView.as_view(), name='application-create'),
+    path('application/', ApplicationView.as_view(), name='application-create'),
 ]
