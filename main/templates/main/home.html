@@ -1,0 +1,22 @@
+{% extends "main/base.html" %}
+{% block content %}
+<h3><a href="{% url 'biodata' %}">Update Details </a></h3>
+<h2>Bio Data</h2>
+<p>Hello {% if user.is_authenticated %}{{ user.first_name}} {{ user.last_name  }} </p>
+<p>{{ user.biodata.phone_number }}</p>
+<p>{{ user.email }}</p>
+<p>{{ user.biodata.address }}</p>
+<p>{{ user.biodata.national_id }}</p>
+<p>{{ user.biodata.birth_certificate }}</p>
+
+            <section>
+                <div class="content-wrapper">
+                    <h2>Education Level</h2>
+                    {{ user.education.school_name }}
+
+                </div>
+
+            </section>
+{%endif%}
+
+{% endblock content %}
