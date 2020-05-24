@@ -11,6 +11,12 @@ accademic_level_choices = (
     ('year4', 'Year 4'),
     ('year4', 'Year 5'),
 )
+status_choices = (
+    ('pending', 'Pending'),
+    ('approved', 'Approved'),
+    ('sponsored', 'Sponsored'),
+    ('rejected', 'Rejected'),
+)
 class Application(models.Model):
     phone_number = PhoneNumberField()
     user_address=models.CharField(max_length=100)
@@ -22,7 +28,7 @@ class Application(models.Model):
     expected_completion_date = models.DateTimeField()
     moltivation = models.TextField(verbose_name='Why do you deserve sponsorship? ')
     recommendation_letter = models.FileField(upload_to='documents/recommendation_letters')
-    status = models.CharField(max_length=30,default="pending")
+    status = models.CharField(max_length=10, choices=status_choices, default='pending')
     applicant = models.ForeignKey(User,related_name='applicant', on_delete=models.CASCADE)
     submission_date = models.DateTimeField(default=timezone.now)
     approval_date = models.DateTimeField(default=None, blank=True, null=True)
@@ -34,4 +40,4 @@ class Application(models.Model):
         return f'{self.school_name}, {self.school_address}'
 
     def get_absolute_url(self):
-        return reverse('main-home')
+        return reverse('application-detail', kwargs={'pk': self.pk})

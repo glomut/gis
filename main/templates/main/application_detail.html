@@ -1,0 +1,45 @@
+{% extends "main/base.html" %}
+{% block content %}
+
+
+<div class="form-row">
+<div class="form-group col-md-10">
+    <h1>Application Detail</h1>
+    <p>{{ object.applicant.first_name |capfirst }} {{ object.applicant.first_name |capfirst}} <br>{{ object.applicant.email }} </p>
+<p>{{ object.submission_date| date:"F dd, Y" }}</p>
+</div>
+{% if form %}
+{% load crispy_forms_tags %}
+ <div class="form-group col-md-2">
+  <form method="POST">
+        {% csrf_token %}
+
+            {{ form|crispy }}
+
+
+        <div class="form-group"><button class="btn btn-outline-info" type="submit">Update approval</button></div>
+    </form>
+     {% endif %}
+ </div>
+
+<p>
+
+
+<p>{{ object.school_name | capfirst}}</p>
+    <p>{{ object.school_address| capfirst}} </p>
+    <p>{{ object.accademic_level }}</p>
+    <p>{{ object.expected_completion_date |date:"F dd, Y" }}</p>
+    <p>{{ object.phone_number }}</p>
+    <p>{{ object.user_address |capfirst }}</p>
+    <p>{{ object.recommendation_letter }}</p>
+     <p>{{ object.national_id }}</p>
+     <p>{{ object.birth_certificate }}</p>
+    <p>{{ object.status }}</p>
+    <p>{{ object.approval_date }}</p>
+    <p>{{ object.approved_by}}</p>
+    <p>{{ object.sponsor}}</p>
+    <p>{{ object.date_sponsored}}</p>
+ <p>{{ object.moltivation }}</p>
+
+
+{% endblock %}

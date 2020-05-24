@@ -1,9 +1,10 @@
 from django.shortcuts import render, redirect
 from datetime import datetime
-from django.contrib.auth.mixins import LoginRequiredMixin,UserPassesTestMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.core.exceptions import ValidationError
 from.models import Application
 from django.views import generic
+from django.views.generic import DetailView,UpdateView
 from bootstrap_datepicker_plus import DateTimePickerInput
 
 def home(request):
@@ -35,3 +36,28 @@ class ApplicationCreateView(LoginRequiredMixin,generic.edit.CreateView):
         if expected_completion_date < datetime.now():
             raise ValidationError("Expected completion date must be a future date")
         return expected_completion_date
+
+class ApplicationDetailView(UserPassesTestMixin,DetailView):
+    model=Application
+
+    def test_func(self):
+        application=self.get_object()
+        if self.request.user==application.applicant:
+            return True
+        return False
+
+class ApplicationUpdateView(LoginRequiredMixin,UpdateView):
+    model = Application
+    template_name = 'main/application_detail.html'
+    fields=['status']
+
+    def form_valid(self, form):
+        form.instance.approved_by=self.request.user
+        form.instance.approval_date = datetime.now()
+        return super().form_valid(form)
+    def test_func(self):
+        application=self.get_object()
+        for group in self.request.user.groups.all():
+            if str(group) == "sponsor":
+                return True
+        return False
