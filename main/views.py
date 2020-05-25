@@ -9,6 +9,7 @@ from django.views.generic import DetailView,UpdateView,ListView
 from bootstrap_datepicker_plus import DateTimePickerInput
 from django.core.mail import send_mail,EmailMessage
 from sponsorship.settings import EMAIL_HOST_USER
+from django.contrib.auth.decorators import login_required
 
 def home(request):
     if request.user.is_authenticated:
