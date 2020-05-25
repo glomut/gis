@@ -131,13 +131,20 @@ MEDIA_URL = '/media/'
 AUTH_USER_EMAIL_UNIQUE = True
 
 
-
-
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 EMAIL_USE_TLS = True
-EMAIL_HOST = 'my.smtp.host'
-EMAIL_PORT = 25
-EMAIL_HOST_USER = 'myemailaccount@mydomain.com'
-EMAIL_HOST_PASSWORD = 'mypassword
-
+EMAIL_PORT = 587
+EMAIL_HOST = 'smtp.zoho.com'
+EMAIL_HOST_USER = 'info@webk.co.ke'
+EMAIL_HOST_PASSWORD = 'webKadmin1234#'
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_USE_TLS = True
+# EMAIL_HOST = 'my.smtp.host'
+# EMAIL_PORT = 25
+# EMAIL_HOST_USER = 'myemailaccount@mydomain.com'
+# EMAIL_HOST_PASSWORD = 'mypassword
+#
+# DEFAULT_FROM_EMAIL = EMAIL_HOST_USER

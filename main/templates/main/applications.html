@@ -1,6 +1,6 @@
 {% extends "main/base.html" %}
 {% block content %}
-<h1>About us</h1>
+<h1>Applicants</h1>
 
 <table class="table">
     <thead>
@@ -14,7 +14,9 @@
     {% for application in applications %}
 
     <tr>
-        <td>{{ application.applicant.first_name |capfirst }}
+        <td>
+            {{ forloop.counter}}.
+            {{ application.applicant.first_name |capfirst }}
             {{ application.applicant.first_name |capfirst}}</td>
         <td>{{ application.applicant.email}}</td>
         <td>{{ application.accademic_level }}</td>
