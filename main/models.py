@@ -12,9 +12,7 @@ accademic_level_choices = (
     ('year4', 'Year 5'),
 )
 status_choices = (
-    ('pending', 'Pending'),
     ('approved', 'Approved'),
-    ('sponsored', 'Sponsored'),
     ('rejected', 'Rejected'),
 )
 class Application(models.Model):

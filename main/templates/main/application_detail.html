@@ -2,10 +2,14 @@
 {% block content %}
 
 {% if form %}
+     {% for group in user.groups.all %}
+                {%if group|stringformat:"s" == "staff" %}
+
 {% load crispy_forms_tags %}
 <div class="row" style="float-right">
     <div class="col-md-9">
-         <p><span><small style="text-muted">Submited on {{ object.submission_date| date:"F d, Y" }}</small></span></p>
+
+        <p><span><small style="text-muted">Submited on {{ object.submission_date| date:"F d, Y" }}</small></span></p>
     </div>
     <div class="col-md-2">
         <form method="POST">
@@ -18,11 +22,13 @@
         </form>
     </div>
 </div>
+{% else %}
+<a class="nav-item nav-link pull-right" href="{% url 'sponsor' object.id %}" class="btn btn-primary">Sponsor</a>
+                {%endif%}
+                {% endfor %}
 {% endif %}
-
-{% if user == object.applicant %}
 <p><strong>Application Status: </strong> {{object.status|capfirst }}</p>
-{% endif %}
+
 
 <div id="accordion">
     <div class="card">
@@ -44,9 +50,8 @@
                 <p><strong>Email address: </strong>{{ object.applicant.email }}</p>
                 <p><strong>Phone number: </strong>{{ object.phone_number }}</p>
                 <p><strong>User Address: </strong>{{ object.user_address |capfirst }}</p>
-                <p><a href="http://localhost:8000{{object.national_id.url }}">National ID</a></p>
-                <p><a href="http://localhost:8000{{object.birth_certificate.url }}">Birth Certificate</a></p>
-
+                <p><a href="{{object.national_id.url }}">National ID</a></p>
+                <p><a href="{{object.birth_certificate.url }}">Birth Certificate</a></p>
 
 
             </div>

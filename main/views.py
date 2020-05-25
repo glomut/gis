@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
-from datetime import datetime
+from datetime import datetime,date
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.contrib.messages.views import SuccessMessageMixin
 from django.core.exceptions import ValidationError
 from.models import Application
 from django.views import generic
@@ -43,9 +44,9 @@ class ApplicationCreateView(LoginRequiredMixin,generic.edit.CreateView):
             raise ValidationError("Expected completion date must be a future date")
         return expected_completion_date
 
+
 class ApplicationDetailView(UserPassesTestMixin,DetailView):
     model=Application
-
     def test_func(self):
         application=self.get_object()
         if self.request.user==application.applicant:
@@ -58,7 +59,7 @@ class ApplicationDetailView(UserPassesTestMixin,DetailView):
             return False
 
 # change view so that sponsors see only approved application
-class ApplicationUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+class ApplicationUpdateView(LoginRequiredMixin, UserPassesTestMixin, generic.edit.UpdateView):
     model = Application
     template_name = 'main/application_detail.html'
     permission_required = ('application.can_edits', 'application.can_views',)
@@ -69,18 +70,10 @@ class ApplicationUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView)
         message = 'Your application for sponsorship  has been '+ str(status).upper()
         send_mail(subject, message, EMAIL_HOST_USER, [reciever])
 
-    def send_sponsor_email(self, reciever,status, sponsor):
-        subject = 'Sponsorship Application Update'
-        message = 'Congratulations! You have recieved sponsorship. Your Sponsor is '+ \
-                  sponsor[0].capitalize()  +" "+ sponsor[1].capitalize()  +"\n" +'Email address: '+ sponsor[2]
-        send_mail(subject, message, EMAIL_HOST_USER, [reciever])
+
 
     def form_valid(self, form):
-        if str(form.instance.status)=='sponsored':
-            self.sponsor=[self.request.user.first_name, self.request.user.last_name, self.request.user.email]
-            self.send_sponsor_email(form.instance.applicant.email,form.instance.status, self.sponsor)
-        else:
-            self.send_approval_email(form.instance.applicant.email, form.instance.status)
+        self.send_approval_email(form.instance.applicant.email, form.instance.status)
         form.instance.approved_by=self.request.user
         form.instance.approval_date = datetime.now()
         return super().form_valid(form)
@@ -108,3 +101,27 @@ class ApplicationListView(ListView):
             if str(group) == "staff":
                 return True
         return False
+def send_sponsor_email(reciever,status, sponsor):
+    subject = 'Sponsorship Application Update'
+    message = 'Congratulations! You have recieved sponsorship. Your Sponsor is '+ \
+                  sponsor[0].capitalize()  +" "+ sponsor[1].capitalize()  +"\n" +'Email address: '+ sponsor[2]
+    send_mail(subject, message, EMAIL_HOST_USER, [reciever])
+
+def approvedlist(request):
+    context={
+        'application':Application.objects.all().filter(status="approved")
+    }
+    return render(request, 'main/applications.html', context)
+
+
+def sponsorview(request, id):
+    app=Application.objects.get(pk=id)
+    app.status="sponsored"
+    app.sponsor = request.user
+    app.date_sponsored=date.today()
+    sponsor_details = [request.user.first_name, request.user.last_name, request.user.email]
+
+    send_sponsor_email(app.applicant.email, "SPONSORED", sponsor_details)
+    print(app)
+    return redirect('application-update',pk=id)
+
