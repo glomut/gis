@@ -88,7 +88,7 @@ class ApplicationUpdateView(LoginRequiredMixin, UserPassesTestMixin, generic.edi
 
 
 
-class ApplicationListView(LoginRequiredMixin,ListView,UserPassesTestMixin):
+class ApplicationListView(LoginRequiredMixin,UserPassesTestMixin,ListView):
     model=Application
     template_name = 'main/applications.html'
     context_object_name = 'applications'
@@ -101,6 +101,7 @@ class ApplicationListView(LoginRequiredMixin,ListView,UserPassesTestMixin):
             if str(group) == "staff":
                 return True
         return False
+    
 def send_sponsor_email(reciever,status, sponsor):
     subject = 'Sponsorship Application Update'
     message = 'Congratulations! You have recieved sponsorship. Your Sponsor is '+ \
