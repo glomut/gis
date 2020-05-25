@@ -113,7 +113,7 @@ def send_sponsor_email(reciever,status, sponsor):
 @login_required
 def approvedlist(request):
     context={
-        'application':Application.objects.all().filter(status="approved")
+        'applications':Application.objects.all().filter(status="approved")
     }
     return render(request, 'main/applications.html', context)
 
