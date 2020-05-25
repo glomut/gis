@@ -108,6 +108,7 @@ def send_sponsor_email(reciever,status, sponsor):
                   sponsor[0].capitalize()  +" "+ sponsor[1].capitalize()  +"\n" +'Email address: '+ sponsor[2]
     send_mail(subject, message, EMAIL_HOST_USER, [reciever])
 
+@login_required
 def approvedlist(request):
     context={
         'application':Application.objects.all().filter(status="approved")
