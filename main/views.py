@@ -45,7 +45,7 @@ class ApplicationCreateView(LoginRequiredMixin,generic.edit.CreateView):
         return expected_completion_date
 
 
-class ApplicationDetailView(UserPassesTestMixin,DetailView):
+class ApplicationDetailView(LoginRequiredMixin,UserPassesTestMixin,DetailView):
     model=Application
     def test_func(self):
         application=self.get_object()
@@ -88,7 +88,7 @@ class ApplicationUpdateView(LoginRequiredMixin, UserPassesTestMixin, generic.edi
 
 
 
-class ApplicationListView(ListView):
+class ApplicationListView(LoginRequiredMixin,ListView,UserPassesTestMixin):
     model=Application
     template_name = 'main/applications.html'
     context_object_name = 'applications'
@@ -123,5 +123,5 @@ def sponsorview(request, id):
 
     send_sponsor_email(app.applicant.email, "SPONSORED", sponsor_details)
     print(app)
-    return redirect('application-update',pk=id)
+    return redirect('main-approved')
 

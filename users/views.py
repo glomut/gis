@@ -2,6 +2,7 @@ from django.shortcuts import render,redirect
 from django.contrib import messages
 from .forms import UserRegisterForm
 from django.contrib.auth.models import Group
+from django.contrib.auth.decorators import login_required
 
 def register_applicant(request):
     if request.method=='POST':
@@ -16,6 +17,7 @@ def register_applicant(request):
         form=UserRegisterForm()
     return render(request, 'users/register.html', {'form':form})
 
+@login_required
 def register_sponsor(request):
     if request.method=='POST':
         form=UserRegisterForm(request.POST)

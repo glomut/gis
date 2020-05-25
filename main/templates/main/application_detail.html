@@ -23,8 +23,11 @@
     </div>
 </div>
 {% else %}
-<a class="nav-item nav-link pull-right" href="{% url 'sponsor' object.id %}" class="btn btn-primary">Sponsor</a>
+<button class="btn btn-info">
+<a class="nav-item nav-link pull-right" href="{% url 'sponsor' object.id %}"  style="color:#FFF">Sponsor Applicant</a>
+    </button>
                 {%endif%}
+
                 {% endfor %}
 {% endif %}
 <p><strong>Application Status: </strong> {{object.status|capfirst }}</p>

@@ -14,7 +14,7 @@
 <body>
 <nav class="navbar navbar-expand-sm navbar-light">
     <div class="container">
-        <a class="navbar-brand" href="index.html"><i class='uil uil-user'></i> Sponsorship</a>
+<!--        <a class="navbar-brand" href="index.html"><i class='uil uil-user'></i> Sponsorship</a>-->
 
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false"
@@ -30,11 +30,15 @@
 
                 {% if user.is_authenticated %}
                 {% for group in user.groups.all %}
-                {%if group|stringformat:"s" == "sponsor" or group|stringformat:"s" == "staff" %}
-                <a class="nav-item nav-link pull-right" href="{% url 'main-applications' %}">Applications</a>
+                {%if group|stringformat:"s" == "staff" %}
+                <a class="nav-item" href="{% url 'main-applications' %}">Applications</a>
+                {% endif %}
+                {% if group|stringformat:"s" == "sponsor" %}
+                <a class="nav-item" href="{% url 'main-approved' %}">Applicants</a>
                 {%endif%}
+
                 {% endfor %}
-                <li><a href="{% url 'logout' %}" class="nav-link"><span data-hover="Logout">Logout {{ user }}</span></a>
+                <li><a href="{% url 'logout' %}" class="nav-item "><span data-hover="Logout">Logout {{ user }}</span></a>
                 </li>
                 {% else %}
                 <li class="nav-item">
