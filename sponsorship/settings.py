@@ -1,4 +1,5 @@
 import os
+from django.conf import settings
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -128,3 +129,15 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
 AUTH_USER_EMAIL_UNIQUE = True
+
+
+
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'my.smtp.host'
+EMAIL_PORT = 25
+EMAIL_HOST_USER = 'myemailaccount@mydomain.com'
+EMAIL_HOST_PASSWORD = 'mypassword
+
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER

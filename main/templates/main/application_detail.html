@@ -10,8 +10,8 @@
             <span><small style="text-muted">Submited on {{ object.submission_date| date:"F d, Y" }}</small></span>
         </p>
         <p>User Address: {{ object.user_address |capfirst }}</p>
-        <p>{{ object.national_id }}</p>
-        <p>{{ object.birth_certificate }}</p>
+        <p><a href="http://localhost:8000{{object.national_id.url }}">National ID</a></p>
+        <p><a href="http://localhost:8000{{object.birth_certificate.url }}">Birth Certificate</a></p>
     </div>
     {% if form %}
     {% load crispy_forms_tags %}
@@ -40,7 +40,7 @@
 
     </div>
 <div class="row">
-      <p>{{ object.recommendation_letter }}</p>
+    <p><a href="{{object.recommendation_letter.url}}">Recommendation Letter</a><br></p>
     <p>{{ object.moltivation }}</p>
 
 </div>

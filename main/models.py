@@ -24,7 +24,7 @@ class Application(models.Model):
     birth_certificate=models.FileField(upload_to='documents/birth_certificates')
     school_name = models.CharField(max_length=100)
     school_address = models.CharField(max_length=100)
-    accademic_level = models.CharField(max_length=10, choices=accademic_level_choices, default='year1')
+    accademic_level = models.CharField(verbose_name='Academic Level',max_length=10, choices=accademic_level_choices, default='year1')
     expected_completion_date = models.DateTimeField()
     moltivation = models.TextField(verbose_name='Why do you deserve sponsorship? ')
     recommendation_letter = models.FileField(upload_to='documents/recommendation_letters')

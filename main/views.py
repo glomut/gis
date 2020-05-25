@@ -6,6 +6,7 @@ from.models import Application
 from django.views import generic
 from django.views.generic import DetailView,UpdateView,ListView
 from bootstrap_datepicker_plus import DateTimePickerInput
+from django.core.mail import send_mail,EmailMessage
 
 def home(request):
     if request.user.is_authenticated:
@@ -44,7 +45,12 @@ class ApplicationDetailView(UserPassesTestMixin,DetailView):
         application=self.get_object()
         if self.request.user==application.applicant:
             return True
-        return False
+        else:
+            for group in self.request.user.groups.all():
+                print(group)
+                if str(group) in ["staff","sponsor"]:
+                    return True
+            return False
 
 class ApplicationUpdateView(LoginRequiredMixin,UpdateView):
     model = Application
@@ -52,20 +58,35 @@ class ApplicationUpdateView(LoginRequiredMixin,UpdateView):
     fields=['status']
 
     def form_valid(self, form):
+        mail=send_mail('My Subject', 'My message', 'info@webk.co.ke',
+                  ['glomut@gmail.com'], fail_silently=False)
+        if mail:
+            print("mail send")
+        else:
+            print("error sending email")
         form.instance.approved_by=self.request.user
         form.instance.approval_date = datetime.now()
         return super().form_valid(form)
 
     def test_func(self):
-        application=self.get_object()
         for group in self.request.user.groups.all():
             print(group)
-            if str(group) == "staff" or str(group) == "sponsor":
+            if str(group) == "staff":
                 return True
         return False
+
+
 
 class ApplicationListView(ListView):
     model=Application
     template_name = 'main/applications.html'
     context_object_name = 'applications'
     ordering=['-submission_date',]
+
+    # fix
+    def test_func(self):
+        for group in self.request.user.groups.all():
+            print(group)
+            if str(group) == "staff":
+                return True
+        return False
