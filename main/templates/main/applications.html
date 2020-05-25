@@ -20,7 +20,7 @@
             {{ application.applicant.first_name |capfirst}}</td>
         <td>{{ application.applicant.email}}</td>
         <td>{{ application.accademic_level }}</td>
-        <td>{{ application.submission_date| date:"F dd, Y" }}</td>
+        <td>{{ application.submission_date| date:"F d, Y" }}</td>
         <td> <a href="{% url 'application-update' application.id %}">View application</a></td>
     </tr>
 

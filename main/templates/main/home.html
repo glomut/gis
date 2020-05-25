@@ -1,15 +1,22 @@
 {% extends "main/base.html" %}
 {% block content %}
-<h3><a href="#">Home Page </a></h3>
-{% if user.is_authenticated %}
-    unkowned group
+<h3></h3>
 
-{% else %}
 
-<a href="{% url 'register-applicant' %}">Apply for Sponsorship</a><br>
-<a href="">Admin Page</a><br>
-<a href="{% url 'register-applicant' %}">Sponsors Page</a>
-
-{%  endif %}
-
+<div class="card-deck">
+  <div class="card">
+    <div class="card-body mx-auto">
+        <h5 class="card-title"><a href="{% url 'register-applicant' %}">Applicants Page</a></h5>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-body mx-auto">
+      <h5 class="card-title"><a href="{% url 'login' %}">Sponsors Page</a></h5>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-body mx-auto">
+      <h5 class="card-title"><a href="">Staff Page</a> </h5></div>
+  </div>
+</div>
 {% endblock content %}

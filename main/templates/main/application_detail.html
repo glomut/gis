@@ -1,48 +1,102 @@
 {% extends "main/base.html" %}
 {% block content %}
 
-
-<div class="row">
-    <div class="form-group col-md-10">
-        <h3>{{ object.applicant.first_name |capfirst }} {{ object.applicant.first_name |capfirst}} Application
-            Details</h3>
-        <p> Email: {{ object.applicant.email }} Phone Number:{{ object.phone_number }}
-            <span><small style="text-muted">Submited on {{ object.submission_date| date:"F d, Y" }}</small></span>
-        </p>
-        <p>User Address: {{ object.user_address |capfirst }}</p>
-        <p><a href="http://localhost:8000{{object.national_id.url }}">National ID</a></p>
-        <p><a href="http://localhost:8000{{object.birth_certificate.url }}">Birth Certificate</a></p>
+{% if form %}
+{% load crispy_forms_tags %}
+<div class="row" style="float-right">
+    <div class="col-md-9">
+         <p><span><small style="text-muted">Submited on {{ object.submission_date| date:"F d, Y" }}</small></span></p>
     </div>
-    {% if form %}
-    {% load crispy_forms_tags %}
-    <div class="form-group col-md-2">
+    <div class="col-md-2">
         <form method="POST">
-            {% csrf_token %}
-
-            {{ form|crispy }}
-
-
             <div class="form-group">
+                {% csrf_token %}
+                {{ form|crispy }}
+
                 <button class="btn btn-outline-info" type="submit">Update approval</button>
             </div>
         </form>
     </div>
-        {% endif %}
+</div>
+{% endif %}
+
+{% if user == object.applicant %}
+<p><strong>Application Status: </strong> {{object.status|capfirst }}</p>
+{% endif %}
+
+<div id="accordion">
+    <div class="card">
+        <div class="card-header" id="headingOne">
+            <h5 class="mb-0">
+                <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne"
+                        aria-expanded="true" aria-controls="collapseOne">
+                    <h3>Applicant Bio Data</h3>
+                </button>
+            </h5>
+        </div>
+
+        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+            <div class="card-body">
+
+
+                <p><strong>Name:</strong> {{ object.applicant.first_name|capfirst }}
+                    {{object.applicant.first_name|capfirst}}</p>
+                <p><strong>Email address: </strong>{{ object.applicant.email }}</p>
+                <p><strong>Phone number: </strong>{{ object.phone_number }}</p>
+                <p><strong>User Address: </strong>{{ object.user_address |capfirst }}</p>
+                <p><a href="http://localhost:8000{{object.national_id.url }}">National ID</a></p>
+                <p><a href="http://localhost:8000{{object.birth_certificate.url }}">Birth Certificate</a></p>
+
+
+
+            </div>
+        </div>
     </div>
 
 
+    <div class="card">
+        <div class="card-header" id="headingTwo">
+            <h5 class="mb-0">
+                <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo"
+                        aria-expanded="false" aria-controls="collapseTwo">
+                    <h3>School Information</h3>
+                </button>
+            </h5>
+        </div>
+        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+            <div class="card-body">
+                <p><strong>School Name: </strong>{{ object.school_name| capfirst}}</p>
+                <p><strong>School Address: </strong>{{ object.school_address| capfirst}} </p>
+                <p><strong>Academic Level: </strong>{{ object.accademic_level }}</p>
+                <p><strong>Expected Completion Date: </strong>{{ object.expected_completion_date |date:"F dd, Y"}}</p>
 
-<div class="row">
-    <p>{{ object.school_name| capfirst}}</p>
-    <p>{{ object.school_address| capfirst}} </p>
-    <p>{{ object.accademic_level }}</p>
-    <p>{{ object.expected_completion_date |date:"F dd, Y" }}</p>
-
+            </div>
+        </div>
     </div>
-<div class="row">
-    <p><a href="{{object.recommendation_letter.url}}">Recommendation Letter</a><br></p>
-    <p>{{ object.moltivation }}</p>
+
+    <div class="card">
+        <div class="card-header" id="headingThree">
+            <h5 class="mb-0">
+                <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseThree"
+                        aria-expanded="false" aria-controls="collapseThree">
+                    <h3>Application Details</h3>
+                </button>
+            </h5>
+        </div>
+        <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+            <div class="card-body">
+                <p><a href="{{object.recommendation_letter.url}}">Recommendation Letter</a><br></p>
+                <h4>Applicant defense</h4>
+                <p>{{ object.moltivation }}</p>
+
+            </div>
+        </div>
+    </div>
+
 
 </div>
 
-    {% endblock %}
+
+</div>
+
+{% endblock %}
