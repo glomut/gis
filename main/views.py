@@ -58,9 +58,10 @@ class ApplicationDetailView(UserPassesTestMixin,DetailView):
             return False
 
 # change view so that sponsors see only approved application
-class ApplicationUpdateView(LoginRequiredMixin,UpdateView):
+class ApplicationUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Application
     template_name = 'main/application_detail.html'
+    permission_required = ('application.can_edits', 'application.can_views',)
     fields=['status']
 
     def send_approval_email(self, reciever,status):
@@ -85,9 +86,10 @@ class ApplicationUpdateView(LoginRequiredMixin,UpdateView):
         return super().form_valid(form)
 
     def test_func(self):
+        print("entering func function")
         for group in self.request.user.groups.all():
             print(group)
-            if str(group) == "staff":
+            if str(group) == "staff" or str(group) == "sponsor":
                 return True
         return False
 
