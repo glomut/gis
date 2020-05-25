@@ -10,6 +10,7 @@ from bootstrap_datepicker_plus import DateTimePickerInput
 from django.core.mail import send_mail,EmailMessage
 from sponsorship.settings import EMAIL_HOST_USER
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 
 def home(request):
     if request.user.is_authenticated:
@@ -125,6 +126,7 @@ def sponsorview(request, id):
     sponsor_details = [request.user.first_name, request.user.last_name, request.user.email]
 
     send_sponsor_email(app.applicant.email, "SPONSORED", sponsor_details)
+    messages.success(request, f'Application updated successfully Applicant has been notified of the sponsorship.')
     print(app)
     return redirect('main-approved')
 
