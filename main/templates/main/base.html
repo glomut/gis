@@ -34,11 +34,11 @@
                 <a class="nav-item" href="{% url 'main-applications' %}">Applications</a>
                 {% endif %}
                 {% if group|stringformat:"s" == "sponsor" %}
-                <a class="nav-item" href="{% url 'main-approved' %}">Applicants</a>
+                <a class="nav-link" href="{% url 'main-approved' %}">Applicants</a>
                 {%endif%}
 
                 {% endfor %}
-                <li><a href="{% url 'logout' %}" class="nav-item "><span data-hover="Logout">Logout {{ user }}</span></a>
+                <li><a href="{% url 'logout' %}" class="nav-link "><span data-hover="Logout">Logout {{ user }}</span></a>
                 </li>
                 {% else %}
                 <li class="nav-item">
