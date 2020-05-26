@@ -123,6 +123,7 @@ def sponsorview(request, id):
     app.status="sponsored"
     app.sponsor = request.user
     app.date_sponsored=date.today()
+    app.save()
     sponsor_details = [request.user.first_name, request.user.last_name, request.user.email]
 
     send_sponsor_email(app.applicant.email, "SPONSORED", sponsor_details)
