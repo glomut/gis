@@ -7,3 +7,4 @@ media/
 
 db.bat
 env.bat
+sponsorship/local_settings.py
