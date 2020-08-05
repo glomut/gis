@@ -4,6 +4,7 @@
 {% if form %}
      {% for group in user.groups.all %}
                 {%if group|stringformat:"s" == "staff" %}
+{%if object.status == 'pending' %}
 
 {% load crispy_forms_tags %}
 <div class="row" style="float-right">

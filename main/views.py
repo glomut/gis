@@ -81,9 +81,7 @@ class ApplicationUpdateView(LoginRequiredMixin, UserPassesTestMixin, generic.edi
         return super().form_valid(form)
 
     def test_func(self):
-        print("entering func function")
         for group in self.request.user.groups.all():
-            print(group)
             if str(group) == "staff" or str(group) == "sponsor":
                 return True
         return False
@@ -99,7 +97,6 @@ class ApplicationListView(LoginRequiredMixin,UserPassesTestMixin,ListView):
     # fix
     def test_func(self):
         for group in self.request.user.groups.all():
-            print(group)
             if str(group) == "staff":
                 return True
         return False
